@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -119,18 +120,24 @@ public class NewAdvertActivity extends  AppCompatActivity {
     }
 
     public void getCurrentLocation(View view) {
+        view.setEnabled(false);
         if (isLocationPermissionGranted()) {
 //            if (fusedLocationProviderClient == null) fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            fusedLocationProviderClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, null).addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
+                    view.setEnabled(true);
                     currentLocation = task.getResult();
                     if (currentLocation != null) {
                         try {
                             Geocoder geocoder = new Geocoder(NewAdvertActivity.this, Locale.getDefault());
                             List<Address> addresses = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
                             Log.i("asdf", addresses.get(0).getAddressLine(0));
+                            String name = addresses.get(0).getAddressLine(0);
+                            placeName.setText(name);
+                            latLngText.setText(currentLocation.getLatitude() + "," + currentLocation.getLongitude());
+                            ((AutocompleteSupportFragment)getSupportFragmentManager().findFragmentById(R.id.auto_complete_fragment)).setText(name);
                         } catch (IOException e) {
                             Log.d("NewAdvertActivity", "something went wrong");
                             e.printStackTrace();
