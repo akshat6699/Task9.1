@@ -65,9 +65,19 @@ public class Post implements Serializable {
 //        return date;
 //    }
 //
-//    public String getLocation() {
-//        return location;
-//    }
+    public String getLocation() {
+        if (location.contains("@:"))
+            return location.split("@:")[0];
+        else
+            return location;
+    }
+
+    public String getLatLang() {
+        if (location.contains("@:"))
+            return location.split("@:")[1];
+        else
+            return "";
+    }
 //
 //
 //    public void setType(String type) {

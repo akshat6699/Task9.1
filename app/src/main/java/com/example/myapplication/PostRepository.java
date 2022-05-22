@@ -34,4 +34,10 @@ class PostRepository {
             mPostDao.insertAll(post);
         });
     }
+
+    void delete(Post post) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            mPostDao.delete(post);
+        });
+    }
 }

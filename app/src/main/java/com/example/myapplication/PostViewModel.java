@@ -22,5 +22,6 @@ public class PostViewModel extends AndroidViewModel {
     LiveData<List<Post>> getAllPosts() { return mAllPosts; }
 
     public void insert(Post post) { mRepository.insert(post); }
+    public void delete(Post post) { mRepository.delete(post); }
 }
 

@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,13 +37,20 @@ public class DetailsActivity extends  AppCompatActivity {
                 }
             }
         });
+
+        findViewById(R.id.btnRemove).setOnClickListener(this::remove);
+    }
+
+    protected void remove(View view) {
+        postViewModel.delete(post);
+        startActivity(new Intent(this, AllPostsActivity.class));
     }
 
     protected void updateView() {
         ((TextView)findViewById(R.id.itemName)).setText(post.name);
         ((TextView)findViewById(R.id.itemType)).setText(post.type);
         ((TextView)findViewById(R.id.itemDescription)).setText(post.description);
-        ((TextView)findViewById(R.id.itemLocation)).setText("At " + post.location);
+        ((TextView)findViewById(R.id.itemLocation)).setText("At " + post.getLocation());
         ((TextView)findViewById(R.id.itemDate)).setText(ChronoUnit.DAYS.between(post.date.toInstant(), new Date().toInstant()) + " days ago.");
     }
 }

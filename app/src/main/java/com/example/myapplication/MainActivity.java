@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
         Button showAllItems = findViewById(R.id.btn_show_all_items);
         showAllItems.setOnClickListener(this::onButtonClicked);
+
+        Button showMap = findViewById(R.id.btn_show_map);
+        showMap.setOnClickListener(this::onButtonClicked);
     }
 
     public void onButtonClicked(View view) {
@@ -30,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_show_all_items:
                 intent = new Intent(this, AllPostsActivity.class);
+                break;
+            case R.id.btn_show_map:
+                intent = new Intent(this, MapsActivity.class);
                 break;
         }
 
